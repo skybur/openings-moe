@@ -61,8 +61,8 @@ class _OpeningListPageState extends State<OpeningListPage>
       ),
       floatingActionButton: new SpeedDialFab(
         Icons.menu,
-        childFabs,
-        _fabAnimationController,
+        controller: _fabAnimationController,
+        childFabs: childFabs,
       ),
     );
   }

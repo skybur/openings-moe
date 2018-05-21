@@ -1,4 +1,4 @@
-package com.example.openingsmoe;
+package com.terreciel.openingsmoe;
 
 import android.os.Bundle;
 
