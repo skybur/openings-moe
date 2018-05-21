@@ -4,11 +4,11 @@ Openings.moe client using Flutter.
 
 ## Features
 
-[x] Video list
-[ ] Fullscreen video
-[ ] Random play video (like website)
-[ ] Searching & Filtering
-[ ] Playlist
+- [x] Video list
+- [ ] Fullscreen video
+- [ ] Random play video (like website)
+- [ ] Searching & Filtering
+- [ ] Playlist
 
 ## Getting Started
 
