@@ -23,6 +23,9 @@ class _OpeningDetailPageState extends State<OpeningDetailPage> {
     super.initState();
     _controllerListener = () {
       _initialized = _videoPlayerController.value.initialized;
+      if (_videoPlayerController.value.hasError) {
+        debugPrint(_videoPlayerController.value.errorDescription);
+      }
       setState(() {});
     };
 
