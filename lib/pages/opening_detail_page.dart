@@ -94,25 +94,11 @@ class _OpeningDetailPageState extends State<OpeningDetailPage> {
                             allowScrubbing: true,
                           )
                         : null,
-                  ),
-                  Center(
-                    child: _videoPlayerController.value.isBuffering
-                        ? CircularProgressIndicator()
-                        : null,
                   )
                 ],
               ),
             )
           : CircularProgressIndicator(),
-    );
-  }
-
-  Widget buildProgressIndicator() {
-    return new Center(
-      child: _videoPlayerController.value.isPlaying &&
-              _videoPlayerController.value.isBuffering
-          ? CircularProgressIndicator()
-          : null,
     );
   }
 }
