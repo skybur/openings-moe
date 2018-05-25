@@ -63,45 +63,78 @@ class _OpeningDetailPageState extends State<OpeningDetailPage> {
         ),
       ),
       body: buildContent(),
-      floatingActionButton: _initialized
-          ? FloatingActionButton(
-              heroTag: "MainFAB",
-              onPressed: _videoPlayerController.value.isPlaying
-                  ? _videoPlayerController.pause
-                  : _videoPlayerController.play,
-              child: (_videoPlayerController?.value?.isPlaying ?? false)
-                  ? Icon(Icons.pause)
-                  : Icon(Icons.play_arrow),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 48.0,
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.loop),
+              Icon(Icons.details),
+              Icon(Icons.playlist_add),
+            ],
+          ),
+        ),
+        color: Theme.of(context).primaryColor,
+        hasNotch: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "MainFAB",
+        onPressed: () {
+          if (!_videoPlayerController.value.initialized) {
+            return null;
+          }
+          return _videoPlayerController.value.isPlaying
+              ? _videoPlayerController.pause()
+              : _videoPlayerController.play();
+        },
+        child: fabIcon(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
   Widget buildContent() {
     return Center(
-      child: _initialized
-          ? AspectRatio(
-              aspectRatio: 1280 / 720,
-              child: new Stack(
-                fit: StackFit.passthrough,
-                children: <Widget>[
-                  VideoPlayer(
-                    _videoPlayerController,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _initialized
-                        ? VideoProgressIndicator(
-                            _videoPlayerController,
-                            allowScrubbing: true,
-                          )
-                        : null,
-                  )
-                ],
-              ),
-            )
-          : CircularProgressIndicator(),
+      child: AspectRatio(
+        aspectRatio: 1280 / 720,
+        child: new Stack(
+          fit: StackFit.passthrough,
+          children: <Widget>[
+            VideoPlayer(
+              _videoPlayerController,
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: _initialized
+                  ? VideoProgressIndicator(
+                      _videoPlayerController,
+                      allowScrubbing: true,
+                    )
+                  : null,
+            ),
+            Center(
+              child: _videoPlayerController.value.isBuffering
+                  ? CircularProgressIndicator()
+                  : null,
+            ),
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget fabIcon() {
+    if (!_videoPlayerController.value.initialized) {
+      return Container(
+        height: 20.0,
+        width: 20.0,
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      );
+    }
+    return (_videoPlayerController?.value?.isPlaying ?? false)
+        ? Icon(Icons.pause)
+        : Icon(Icons.play_arrow);
   }
 }
